@@ -1,0 +1,28 @@
+﻿@model Empleado
+
+<div class="container py-3 bg-primary-subtle rounded-3">
+    <h2 class="my-4 text-center">Datos de Empleado</h2>
+    <table class="table table-bordered w-75 text-center ms-auto me-auto">
+        <thead>
+            <tr>
+                <th>Apellido</th>
+                <th>Oficio</th>
+                <th>Salario</th>
+                <th>Departamento</th>
+                <th>Localidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Apellido</td>
+                <td>@Model.Oficio</td>
+                <td>@Model.Salario.ToString("n0")€</td>
+                <td>(@Model.IdDepartamento) @Model.Departamento</td>
+                <td>@Model.Localidad</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a asp-action="Index" class="btn btn-primary">Volver</a>
+    </div>
+</div>

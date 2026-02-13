@@ -1,0 +1,26 @@
+﻿@model List<Empleado>
+
+    <div class="container py-3 bg-primary-subtle rounded-3">
+        <h2 class="my-4 text-center">Lista de Empleados</h2>
+        <table class="table table-bordered w-75 text-center ms-auto me-auto">
+            <thead>
+                <tr>
+                    <th>Apellido</th>
+                    <th>Departamento</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach(Empleado empleado in Model)
+            {
+                <tr>
+                    <td>@empleado.Apellido</td>
+                    <td>(@empleado.IdDepartamento) @empleado.Departamento</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-idempleado="@empleado.IdEmpleado">Detalles</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+    </div>
