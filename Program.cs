@@ -9,14 +9,20 @@ builder.Services.AddControllersWithViews();
 
 string sqlConnectionString = builder.Configuration.GetConnectionString("SqlEmpleados");
 string oracleConnectionString = builder.Configuration.GetConnectionString("OracleEmpleados");
+string mySqlConnectionString = builder.Configuration.GetConnectionString("MySqlEmpleados");
 
 builder.Services.AddDbContext<EmpleadosContext>(options =>
 {
-    // options.UseSqlServer(sqlConnectionString);
+    //options.UseSqlServer(sqlConnectionString);
     options.UseOracle(oracleConnectionString);
+    ////options.UseMySQL(mySqlConnectionString);
 });
 
-builder.Services.AddTransient<RepositoryEmpleados>();
+//builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosSqlServer>();
+
+builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosOracle>();
+
+//builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosMySql>();
 
 var app = builder.Build();
 

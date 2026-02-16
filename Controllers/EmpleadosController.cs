@@ -7,9 +7,9 @@ namespace MvcNetCoreEFMultiplesBBDD.Controllers
 {
     public class EmpleadosController : Controller
     {
-        private readonly RepositoryEmpleados repo;
+        private readonly IRepositoryEmpleados repo;
 
-        public EmpleadosController(RepositoryEmpleados repo)
+        public EmpleadosController(IRepositoryEmpleados repo)
         {
             this.repo = repo;
         }
@@ -25,6 +25,32 @@ namespace MvcNetCoreEFMultiplesBBDD.Controllers
             Empleado emp = await this.repo.GetDetailsEmpleadoAsync(idempleado);
 
             return View(emp);
+        }
+
+        public IActionResult Insert()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Insert(
+            string apellido,
+            string oficio,
+            int idDirector,
+            int salario,
+            int comision,
+            string departamento
+        )
+        {
+            int idEmpleado = await this.repo.InsertEmpleadoAsync(
+                apellido,
+                oficio,
+                idDirector,
+                salario,
+                comision,
+                departamento
+            );
+            return RedirectToAction("Details", new { idempleado = idEmpleado });
         }
     }
 }

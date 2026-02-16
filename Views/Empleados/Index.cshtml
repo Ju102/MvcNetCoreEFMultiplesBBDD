@@ -1,17 +1,18 @@
 ﻿@model List<Empleado>
 
-    <div class="container py-3 bg-primary-subtle rounded-3">
-        <h2 class="my-4 text-center">Lista de Empleados</h2>
-        <table class="table table-bordered w-75 text-center ms-auto me-auto">
-            <thead>
-                <tr>
-                    <th>Apellido</th>
-                    <th>Departamento</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach(Empleado empleado in Model)
+<div class="container py-3 bg-primary-subtle rounded-3">
+    <h2 class="my-4 text-center">Lista de Empleados</h2>
+    <a class="btn btn-success my-3" asp-action="Insert">Crear Nuevo Empleado</a>
+    <table class="table table-bordered w-75 text-center ms-auto me-auto">
+        <thead>
+            <tr>
+                <th>Apellido</th>
+                <th>Departamento</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Empleado empleado in Model)
             {
                 <tr>
                     <td>@empleado.Apellido</td>
@@ -22,5 +23,6 @@
                 </tr>
             }
         </tbody>
-        </table>
-    </div>
+
+    </table>
+</div>
