@@ -7,22 +7,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-string sqlConnectionString = builder.Configuration.GetConnectionString("SqlEmpleados");
-string oracleConnectionString = builder.Configuration.GetConnectionString("OracleEmpleados");
+//string sqlConnectionString = builder.Configuration.GetConnectionString("SqlEmpleados");
+//string oracleConnectionString = builder.Configuration.GetConnectionString("OracleEmpleados");
 string mySqlConnectionString = builder.Configuration.GetConnectionString("MySqlEmpleados");
 
 builder.Services.AddDbContext<EmpleadosContext>(options =>
 {
     //options.UseSqlServer(sqlConnectionString);
-    options.UseOracle(oracleConnectionString);
-    ////options.UseMySQL(mySqlConnectionString);
+    //options.UseOracle(oracleConnectionString);
+    options.UseMySQL(mySqlConnectionString);
 });
 
 //builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosSqlServer>();
 
-builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosOracle>();
+//builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosOracle>();
 
-//builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosMySql>();
+builder.Services.AddTransient<IRepositoryEmpleados, RepositoryEmpleadosMySql>();
 
 var app = builder.Build();
 
@@ -36,6 +36,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseSession();
+
+app.UseCookiePolicy();
 
 app.UseAuthorization();
 

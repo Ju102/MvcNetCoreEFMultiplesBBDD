@@ -1,8 +1,12 @@
 ﻿using System.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using MvcNetCoreEFMultiplesBBDD.Data;
 using MvcNetCoreEFMultiplesBBDD.Models;
+using Mysqlx.Crud;
 using Oracle.ManagedDataAccess.Client;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Azure.Core.HttpHeader;
 
 #region STORED_VIEWS_PROCEDURES_ORACLE
 //create or replace view V_EMPLEADOS as
@@ -23,6 +27,41 @@ using Oracle.ManagedDataAccess.Client;
 //begin
 //   open p_cursor_empleados for
 //	   select * from V_EMPLEADOS;
+//end;
+
+//create or replace procedure sp_insert_empleado (
+//   p_apellido     emp.apellido%type,
+//   p_oficio       emp.oficio%type,
+//   p_dir          emp.dir%type,
+//   p_salario      emp.salario%type,
+//   p_comision     emp.comision%type,
+//   p_departamento dept.dnombre%type,
+//   p_idemple out emp.emp_no%type
+//) as
+//   v_maxid   emp.emp_no%type;
+//v_fecha date := sysdate; --Equivalente a GETDATE()
+//   v_numdept emp.dept_no % type;
+//begin
+//   select(max(emp_no) + 1)
+//     into v_maxid
+//     from emp;
+
+//select dept_no
+//     into v_numdept
+//     from dept
+//    where dnombre = p_departamento;
+
+//insert into emp values ( v_maxid,
+//                         p_apellido,
+//                         p_oficio,
+//                         p_dir,
+//                         v_fecha,
+//                         p_salario,
+//                         p_comision,
+//                         v_numdept );
+//commit;
+
+//select emp_no into p_idemple from emp where apellido = p_apellido;
 //end;
 #endregion
 
@@ -85,7 +124,7 @@ namespace MvcNetCoreEFMultiplesBBDD.Repositories
             sql += "end;";
             OracleParameter paramApellido = new OracleParameter(":p_apellido", apellido);
             OracleParameter paramOficio = new OracleParameter(":p_oficio", oficio);
-            OracleParameter paramDirector = new OracleParameter(":p_dir", apellido);
+            OracleParameter paramDirector = new OracleParameter(":p_dir", idDirector);
             OracleParameter paramSalario = new OracleParameter(":p_salario", salario);
             OracleParameter paramComision = new OracleParameter(":p_comision", comision);
             OracleParameter paramDepartamento = new OracleParameter(
@@ -106,7 +145,7 @@ namespace MvcNetCoreEFMultiplesBBDD.Repositories
                 paramEmpleado
             );
 
-            return (int)paramEmpleado.Value;
+            return int.Parse(paramEmpleado.Value.ToString());
         }
     }
 }
